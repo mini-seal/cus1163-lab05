@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MathCalculatorLab {
 
-    // Simple class to hold calculation data (PROVIDED - DO NOT MODIFY)
+    // Simple class to hold calculation data 
     static class CalculatorBase {
         int n;
         long result;
@@ -74,7 +74,7 @@ public class MathCalculatorLab {
         return task; 
     }
 
-    // Main method PROVIDED - DO NOT MODIFY)
+    // Main method 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -107,7 +107,7 @@ public class MathCalculatorLab {
         scanner.close();
     }
 
-    // Helper method for single calculation (PROVIDED - DO NOT MODIFY)
+    // Helper method for single calculation 
     private static void runSingleDemo(Scanner scanner) {
         System.out.println("\n=== Single Calculation Demo ===");
         System.out.println("1. Fibonacci");
@@ -158,7 +158,7 @@ public class MathCalculatorLab {
         System.out.println("Execution time: " + (endTime - startTime) + "ms");
     }
 
-    // Helper method for multiple calculations (PROVIDED - DO NOT MODIFY)
+    // Helper method for multiple calculations 
     private static void runMultipleDemo(Scanner scanner) {
         System.out.println("\n=== Multiple Concurrent Calculations ===");
         System.out.print("Enter a number (1-20): ");
