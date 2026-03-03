@@ -15,43 +15,66 @@ public class MathCalculatorLab {
         }
     }
 
-    // TODO 1: Implement this method
-    // Creates a Runnable that calculates the nth Fibonacci number
-    // Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...
-    // Formula: fib(n) = fib(n-1) + fib(n-2)
-    // Base cases: fib(0) = 0, fib(1) = 1
-    //
-    // The Runnable should:
-    // 1. Print: "Thread-X computing: fib(n)"
-    // 2. Calculate Fibonacci iteratively using two variables (prev, curr)
-    // 3. Include Thread.sleep(5) in the loop to simulate work
-    // 4. Store result in calc.result
-    // 5. Print: "Thread-X completed: fibonacci(n) = result"
-    //
-    // Example: fibonacci(8) = 21
     public static Runnable fibonacciCalculator(CalculatorBase calc) {
-        // TODO: Return a Runnable (use lambda or anonymous class)
-        return null; // Replace this
+	 Runnable task = () ->{ 
+        	int n = calc.n;
+    		System.out.println(Thread.currentThread().getName() + " computing : fib("+n+")");   
+        	
+        	long result;
+        	
+        	if(n==0) {
+        		result = 0;
+        	}else if(n==1) {
+        		result = 1;        	
+        	}else  {
+        		long prev = 0;
+        		long curr = 1;
+        		result = 1;
+        		
+        		for(int i = 2; i<= n; i++) {
+        			result = prev + curr;
+        			prev = curr;
+        			curr = result;
+        			
+        			try {
+        				Thread.sleep(5);
+        			}catch(InterruptedException e) {
+        				Thread.currentThread().interrupt();
+        			}
+        		
+        		}
+        	}
+        	calc.result = result;
+        	System.out.println(Thread.currentThread().getName() + " completed : fibonacci("+n+") = " + result);
+        	
+    	};//Runnable end
+    	
+        return task;
     }
 
-    // TODO 2: Implement this method
-    // Creates a Runnable that calculates sum of squares from 1 to n
-    // Formula: 1² + 2² + 3² + ... + n²
-    //
-    // The Runnable should:
-    // 1. Print: "Thread-X computing: 1² + 2² + 3² + ... + n²"
-    // 2. Loop from 1 to n, adding i*i to result
-    // 3. Include Thread.sleep(5) in the loop to simulate work
-    // 4. Store result in calc.result
-    // 5. Print: "Thread-X completed: sumOfSquares(n) = result"
-    //
-    // Example: sumOfSquares(5) = 1 + 4 + 9 + 16 + 25 = 55
-    public static Runnable sumOfSquaresCalculator(CalculatorBase calc) {
-        // TODO: Return a Runnable (use lambda or anonymous class)
-        return null; // Replace this
+   public static Runnable sumOfSquaresCalculator(CalculatorBase calc) {
+        Runnable task = () -> {
+    		int n = calc.n;
+        	System.out.println(Thread.currentThread().getName() + " computing: 1² + 2² + 3² + ... + " + n + "²");
+        	
+        	long result = 0;
+        	for(int i = 1; i<=n ; i++) {
+        		result += (i*i);
+        		
+        		try {
+    				Thread.sleep(5);
+    			}catch(InterruptedException e) {
+    				Thread.currentThread().interrupt();
+    			}
+        	}
+        	calc.result = result;
+        	System.out.println(Thread.currentThread().getName() + " completed: sumOfSquares("+n+") = " +result);
+        	
+        };//Runnable end
+        return task; 
     }
 
-    // Main method (PROVIDED - DO NOT MODIFY)
+    // Main method PROVIDED - DO NOT MODIFY)
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -123,8 +146,8 @@ public class MathCalculatorLab {
         thread.start();
 
         try {
-            System.out.println("\nMain thread waiting for calculation to complete...");
             thread.join();
+	    System.out.println("\nMain thread waiting for calculation to complete...");
             System.out.println(thread.getName() + " has finished execution");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -166,11 +189,11 @@ public class MathCalculatorLab {
         sumThread.start();
 
         try {
-            System.out.println("\nMain thread waiting for all calculations to complete...");
             fibThread.join();
-            System.out.println(fibThread.getName() + " has finished execution");
-
             sumThread.join();
+
+            System.out.println("\nMain thread waiting for all calculations to complete...");
+            System.out.println(fibThread.getName() + " has finished execution");
             System.out.println(sumThread.getName() + " has finished execution");
         } catch (InterruptedException e) {
             e.printStackTrace();
