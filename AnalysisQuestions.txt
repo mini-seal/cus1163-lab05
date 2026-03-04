@@ -1,0 +1,36 @@
+1. What's the difference between calling task.run() and new Thread(task).start()? Try both and observe what happens. Which one creates actual concurrency?  
+
+        Calling task.run() results in a regular call in main, there is no concurrency, and no new thread is created. 
+        Calling new Thread(task).start() creates a new thread and runs concurrently on the main thread. 
+        Running task.run() resulted in my output saying “main computing/completed” instead of “Thread-0 computing/completed.”  
+
+2. Why do the threads finish in different orders each time you run option 2? What does this tell you about concurrent execution?  
+
+	      The threads finish in a different order each time I run option 2 because the thread execution order is nondeterministic. 
+        Concurrent execution runs multiple threads, and the order of execution is not guaranteed to be maintained.   
+
+3. What would happen if you didn't call join() before accessing the results? Try removing the join() calls - what goes wrong?  
+
+	      If I didn’t call join() before accessing the results, the main thread does not wait for the other threads to finish running, so the accessed results may contain incorrect values. 
+        Removing the join() call from my code resulted in the Fibonacci sequence being printed as 0. Then, in the next display of “Enter your choice:” the result, which held the correct calculation, was printed.   
+
+4. How does thread execution interleave? Notice how the console output from different threads mixes together. Is this random?  
+
+	      Thread execution is not randomly outputted; it runs according to the OS thread scheduler, which is nondeterministic and unpredictable. 
+        Thread execution interleaving is unpredictable, as the thread scheduler has no order.  
+
+5. Why do we need the Thread.sleep() calls in the calculations? What happens if you remove them? Does it affect correctness or just visibility?  
+
+	      The Thread.sleep() call did not affect correctness when I tested removing it. 
+        The reason we use it in calculations is for visibility; it is used for execution timing (slowing it down).  
+
+6. What happens to the calc object when you create the Runnable? How does the thread access the same CalculatorBase instance?  
+
+      	When I created the Runnable, I used the calc reference that accesses the CalculatorBase instance. 
+        The thread accesses the instance by using the calc reference passed, and then the dot operator to access inside the object for its fields of n and result.   
+
+7. Can you use a lambda expression instead of an anonymous class? Which style is more concise? Which is clearer?  
+
+		Yes, for Runnable, you can use a lambda expression instead of an anonymous class, which is what I’ve implemented for this program. 
+    Lambda expressions are more concise because they use fewer attributes than an anonymous class; they do not require separate method declarations or a “new Runnable()” initialization. 
+    Lambda is also cleaner because it is a shorter program than one written in an anonymous class. 
